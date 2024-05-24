@@ -1,16 +1,20 @@
 
    SOIENT
-       Monarbre : ARB DE ( ENTIER , ENTIER ) ;
-      /****************************            FONCTION ***********************************/
+       Monarbre : ARB DE ( ENTIER , BOOLEEN ) ;
+       L UNE FILE DE ENTIER ;
+       B : BOOLEEN ;
+       Choix : ENTIER ;
+       Generes : BOOLEEN ;
+       Tableaudebst UN VECTEUR ( 10 ) DE ARB DE ( ENTIER , BOOLEEN ) ;
+       Choixarbre : ENTIER ;
+       Jetable : ENTIER ;
+       Listofelements UNE LISTE DE ENTIER ;
+      /****************************                     FONCTION ***********************************/
        Verifytreeinorder : FONCTION ( BOOLEEN ) ;
-      /* Verifytreeinorder(Root) returns true if bst is created w-o errors*/
-      { 
-      }
        Search : FONCTION ( BOOLEEN ) ;
-      /* Search(Root,value)*/
-      { 
-      }
-      /****************************        Procedure **********************************/
+       Verifytraversal1 : FONCTION ( BOOLEEN ) ;
+       Verifytraversal2 : FONCTION ( BOOLEEN ) ;
+      /****************************                 Procedure **********************************/
        Inordrepush : ACTION ;
       /* Inordrepush(root,stack); pushed values in order in stack */
       { 
@@ -37,39 +41,159 @@
       }
        Generatetree : ACTION ;
       /* Generatetree(Root,n) generates a tree with n random unique data */
-       Enqueueintraversal2 : ACTION ;
+       Enqueueleaves : ACTION ;
+       Enfilerinordre : ACTION ;
+       Ajouteralafin : ACTION ;
+       Traversal4 : ACTION ;
+       Enqueueintraversal4 : ACTION ;
+       Enfilerverify2 : ACTION ;
       
    DEBUT
-       Monarbre := NIL ;
-       APPEL Inserer ( Monarbre , 45 ) ;
-       APPEL Inserer ( Monarbre , 20 ) ;
-       APPEL Inserer ( Monarbre , 65 ) ;
-       APPEL Inserer ( Monarbre , 10 ) ;
-       APPEL Inserer ( Monarbre , 35 ) ;
-       APPEL Inserer ( Monarbre , 55 ) ;
-       APPEL Inserer ( Monarbre , 85 ) ;
-       APPEL Inserer ( Monarbre , 50 ) ;
-       APPEL Inserer ( Monarbre , 58 ) ;
-       APPEL Inserer ( Monarbre , 75 ) ;
-       APPEL Inserer ( Monarbre , 95 ) ;
-       APPEL Inserer ( Monarbre , 56 ) ;
-       APPEL Inserer ( Monarbre , 60 ) ;
-       APPEL Inserer ( Monarbre , 90 ) ;
-       APPEL Inserer ( Monarbre , 98 ) ;
-       APPEL Inserer ( Monarbre , 57 ) ;
-       APPEL Inserer ( Monarbre , 62 ) ;
-       APPEL Inserer ( Monarbre , 88 ) ;
-       APPEL Traversal2 ( Monarbre ) ;
+       ECRIRE ( '|' ) ;
+       ECRIRE ( '                    |*************************************************************|' ) ;
+       ECRIRE ( '                    |********TP Z  BST Traversals 2023/2034*************|' ) ;
+       ECRIRE ( '                    |******* By Benyahia Alia & Benhamiche Zakaria *****|' ) ;
+       ECRIRE ( '                    |________________________________________|' ) ;
+       Generes := FAUX ;
+       Choix := 5 ;
+       TANTQUE ( Choix <> 3 )
+           ECRIRE ( '' ) ;
+           ECRIRE ( '' ) ;
+           ECRIRE ( 'Veuillez entrer un choix (1-3)' ) ;
+           ECRIRE ( '' ) ;
+           ECRIRE ( '      1 - Génerer Arbres Binaires ' ) ;
+           ECRIRE ( '' ) ;
+           ECRIRE ( '      2 - Appliquer Traversals' ) ;
+           ECRIRE ( '' ) ;
+           ECRIRE ( '      3 - Exit' ) ;
+           ECRIRE ( '' ) ;
+           LIRE ( Choix ) ;
+           TANTQUE ( ( Choix > 3 ) OU ( Choix < 1 ) )
+               ECRIRE ( 'Veuillez Entrer un choix Valide (de 1 a 3)' ) ;
+               LIRE ( Choix ) ;
+              
+           FTQ ;
+           SI ( Choix = 1 )
+               Generes := VRAI ;
+               Monarbre := NIL ;
+               APPEL Inserer ( Monarbre , 45 ) ;
+               APPEL Inserer ( Monarbre , 20 ) ;
+               APPEL Inserer ( Monarbre , 65 ) ;
+               APPEL Inserer ( Monarbre , 10 ) ;
+               APPEL Inserer ( Monarbre , 35 ) ;
+               APPEL Inserer ( Monarbre , 55 ) ;
+               APPEL Inserer ( Monarbre , 85 ) ;
+               APPEL Inserer ( Monarbre , 50 ) ;
+               APPEL Inserer ( Monarbre , 58 ) ;
+               APPEL Inserer ( Monarbre , 75 ) ;
+               APPEL Inserer ( Monarbre , 95 ) ;
+               APPEL Inserer ( Monarbre , 56 ) ;
+               APPEL Inserer ( Monarbre , 60 ) ;
+               APPEL Inserer ( Monarbre , 90 ) ;
+               APPEL Inserer ( Monarbre , 98 ) ;
+               APPEL Inserer ( Monarbre , 57 ) ;
+               APPEL Inserer ( Monarbre , 62 ) ;
+               APPEL Inserer ( Monarbre , 88 ) ;
+               AFF_ELEMENT ( Tableaudebst [ 1 ] , Monarbre ) ;
+               SI ( Verifytreeinorder ( ELEMENT ( Tableaudebst [ 1 ] ) ) )
+                   ECRIRE ( '************** L''arbre' , Choix , ' a ete cree sans Erreurs ! ***********' ) ;
+                  
+               FSI ;
+              
+           FSI ;
+           SI Choix = 2
+               SI Generes = FAUX
+                   ;
+                   ECRIRE ( '' ) ;
+                   ECRIRE ( '!!!!!!!!!!!! ERREUR : VEUILLEZ D''ABORDS GENERER LES ARBRES !!!!!!!!' ) ;
+                   ECRIRE ( '' ) ;
+                  
+               SINON
+                   ECRIRE ( '' ) ;
+                   ECRIRE ( '' ) ;
+                   ECRIRE ( '     * Sur quel Arbre voulez vous appliquer les traversals ? (1-10)' ) ;
+                   LIRE ( Choixarbre ) ;
+                   TANTQUE ( ( Choixarbre > 10 ) OU ( Choixarbre < 1 ) )
+                       ECRIRE ( '!!!!!!  Veuillez Etrer un arbre entre 1 et 10 !!!!!!!' ) ;
+                       LIRE ( Choixarbre ) ;
+                      
+                   FTQ ;
+                   POUR Jetable := 1 , 99999 , 1
+                  /* une sorte de sleep */
+                       Jetable := Jetable * 2 ;
+                       Jetable := Jetable / 2 ;
+                       Jetable := Jetable * 2 ;
+                       Jetable := Jetable / 2 ;
+                       Jetable := Jetable * 2 ;
+                       Jetable := Jetable / 2 ;
+                       SI ( MOD ( Jetable , 20000 ) = 0 )
+                           ECRIRE ( '       Chargement en cours...' ) ;
+                          
+                       FINSI ;
+
+                   listofelements:=nil;
+                   FPOUR ;
+                   ECRIRE ( '             -- TRAVERSAL 1 --              ' ) ;
+                   APPEL Traversal1 ( ELEMENT ( Tableaudebst [ Choixarbre ] ) , Listofelements ) ;
+                   ECRIRE ( '' ) ;
+                   ECRIRE ( '           Verification du Traversal1 en cours......' ) ;
+                   ECRIRE ( '' ) ;
+
+
+                   SI Verifytraversal1 ( ELEMENT ( Tableaudebst [ Choixarbre ] ) , Listofelements )
+                       ECRIRE ( '' ) ;
+                       ECRIRE ( '          L''Arbre a ete parcouru avec Traversal1 avec succees !!!!!' ) ;
+                       ECRIRE ( '' ) ;
+                   SINON
+                       ECRIRE ( '' ) ;
+                       ECRIRE ( '      !!!!!!Erreur dans le traversal1 !!!!!!' );
+                       ECRIRE ( '' ) ;
+                   FSI;
+
+
+                   listofelements:=nil;
+                   ECRIRE ( '' ) ;
+                   ECRIRE ( '             -- TRAVERSAL 2 --              ' ) ;
+                   ECRIRE ( '' ) ;
+                   APPEL Traversal2 ( ELEMENT ( Tableaudebst [ Choixarbre ] ) , Listofelements ) ;
+                   ECRIRE ( '' ) ;
+                   ECRIRE ( '           Verification du Traversal2 en cours......' ) ;
+                   ECRIRE ( '' ) ;
+
+
+                   SI Verifytraversal2 ( ELEMENT ( Tableaudebst [ Choixarbre ] ) , Listofelements )
+                       ECRIRE ( '' ) ;
+                       ECRIRE ( '          L''Arbre a ete parcouru avec Traversal2 avec succees !!!!!' ) ;
+                       ECRIRE ( '' ) ;
+                   SINON
+                       ECRIRE ( '' ) ;
+                       ECRIRE ( '      !!!!!!Erreur dans le traversal2 !!!!!!' );
+                       ECRIRE ( '' ) ;
+                   FSI;
+
+
+
+               FINSI ;
+              
+           FINSI ;
+          
+       FTQ ;
+       APPEL Traversal2 ( Monarbre ,listofelements) ;
+       ECRIRE ( '      ' ) ;
+       ECRIRE ( '      ' ) ;
+       ECRIRE ( '      ' ) ;
+       ECRIRE ( '      ' ) ;
+
       
    FIN
   { 
    }
   { 
    }
-  /****************************      Fonction affichage *************************/
+  /****************************               Fonction affichage *************************/
    ACTION Afficherarbre ( R )
    SOIT
-       R UN ARB DE ( ENTIER , ENTIER ) ;
+       R UN ARB DE ( ENTIER , BOOLEEN ) ;
       
    DEBUT
        SI R <> NIL
@@ -81,12 +205,12 @@
    FIN
   { 
    }
-  /*************************                Verification Creation BST *************************/
+  /*************************                         Verification Creation BST *************************/
    FONCTION Verifytreeinorder ( Root ) : BOOLEEN
    SOIT
-       Root UN ARB DE ( ENTIER , ENTIER ) ;
-       P UNE PILE DE ( ENTIER , ENTIER ) ;
-       A , B DES ( ENTIER , ENTIER ) ;
+       Root UN ARB DE ( ENTIER , BOOLEEN ) ;
+       P UNE PILE DE ( ENTIER , BOOLEEN ) ;
+       A , B DES ( ENTIER , BOOLEEN ) ;
       
    DEBUT
        APPEL Inordrepush ( Root , P ) ;
@@ -107,11 +231,11 @@
    FIN
   { 
    }
-  /****************************                Push noeuds Inordre ****************************/
+  /****************************         Push noeuds Inordre ****************************/
    ACTION Inordrepush ( Root , P )
    SOIT
-       Root UN ARB DE ( ENTIER , ENTIER ) ;
-       P UNE PILE DE ( ENTIER , ENTIER ) ;
+       Root UN ARB DE ( ENTIER , BOOLEEN ) ;
+       P UNE PILE DE ( ENTIER , BOOLEEN ) ;
       
    DEBUT
        SI Root <> NIL
@@ -123,15 +247,15 @@
    FIN
   { 
    }
-  /*************************                Renitialiser Noeuds visités ************************/
+  /*************************    Renitialiser Noeuds visités ************************/
    ACTION Resettree ( R )
    SOIT
-       R UN ARB DE ( ENTIER , ENTIER ) ;
+       R UN ARB DE ( ENTIER , BOOLEEN ) ;
       
    DEBUT
        SI R <> NIL :
            APPEL Resettree ( FG ( R ) ) ;
-           AFF_STRUCT ( INFO ( R ) , 2 , 0 ) ;
+           AFF_STRUCT ( INFO ( R ) , 2 , FAUX ) ;
            APPEL Resettree ( FD ( R ) ) ;
           
        FSI ;
@@ -139,10 +263,10 @@
    FIN
   { 
    }
-  /*************************                Rechercher noeud dans BST ************************/
+  /*************************  Rechercher noeud dans BST ************************/
    FONCTION Search ( Root , Value ) : BOOLEEN
    SOIT
-       Root UN ARB DE ( ENTIER , ENTIER ) ;
+       Root UN ARB DE ( ENTIER , BOOLEEN ) ;
        Value UN ENTIER ;
       
    DEBUT
@@ -169,24 +293,24 @@
    FIN
   { 
    }
-  /*************************                Inserer Noeud dans BST *************************/
+  /*************************   Inserer Noeud dans BST *************************/
    ACTION Inserer ( Root , Value )
    SOIENT
-       Root UN ARB DE ( ENTIER , ENTIER ) ;
+       Root UN ARB DE ( ENTIER , BOOLEEN ) ;
        Value UN ENTIER ;
-       P UN ARB DE ( ENTIER , ENTIER ) ;
-       New UN ( ENTIER , ENTIER ) ;
+       P UN ARB DE ( ENTIER , BOOLEEN ) ;
+       New UN ( ENTIER , BOOLEEN ) ;
       
    DEBUT
        SI Root = NIL :
            CREERNOEUD ( Root ) ;
-           INIT_STRUCT ( New , [ Value , 0 ] ) ;
+           INIT_STRUCT ( New , [ Value , FAUX ] ) ;
            AFF_INFO ( Root , New ) ;
           
        SINON
            SI ( ( Value < STRUCT ( INFO ( Root ) , 1 ) ) ET ( FG ( Root ) = NIL ) ) :
                CREERNOEUD ( P ) ;
-               INIT_STRUCT ( New , [ Value , 0 ] ) ;
+               INIT_STRUCT ( New , [ Value , FAUX ] ) ;
                AFF_INFO ( P , New ) ;
                AFF_PERE ( P , Root ) ;
                AFF_FG ( Root , P ) ;
@@ -194,7 +318,7 @@
            SINON
                SI ( ( Value >= STRUCT ( INFO ( Root ) , 1 ) ) ET ( FD ( Root ) = NIL ) ) :
                    CREERNOEUD ( P ) ;
-                   INIT_STRUCT ( New , [ Value , 0 ] ) ;
+                   INIT_STRUCT ( New , [ Value , FAUX ] ) ;
                    AFF_INFO ( P , New ) ;
                    AFF_PERE ( P , Root ) ;
                    AFF_FD ( Root , P ) ;
@@ -213,13 +337,37 @@
    FIN
   { 
    }
-  /***********************                Traversal 1 BB-LR-Bottom To Top ***********************/
-   ACTION Traversal1 ( Root )
+  /***************************Generer ARBRE BST ***************************/
+   ACTION Generatetree ( Root , N )
    SOIT
-       Root UN ARB DE ( ENTIER , ENTIER ) ;
-       Stack UNE PILE DE ARB DE ( ENTIER , ENTIER ) ;
-       Q UN ARB DE ( ENTIER , ENTIER ) ;
+       Root UN ARB DE ( ENTIER , BOOLEEN ) ;
+       N UN ENTIER ;
+       I UN ENTIER ;
        A UN ENTIER ;
+      
+   DEBUT
+       POUR I := 1 , N , 1
+           A := ALEANOMBRE ( 300 ) ;
+           TANTQUE Search ( Root , A ) :
+               A := ALEANOMBRE ( 300 ) ;
+              
+           FTQ ;
+           APPEL Inserer ( Root , A ) ;
+          
+       FPOUR ;
+      
+   FIN
+  { 
+   }
+
+  /***********************Traversal 1 BB-LR-Bottom To Top ***********************/
+   ACTION Traversal1 ( Root , L )
+   SOIT
+       Root UN ARB DE ( ENTIER , BOOLEEN ) ;
+       Stack UNE PILE DE ARB DE ( ENTIER , BOOLEEN ) ;
+       Q UN ARB DE ( ENTIER , BOOLEEN ) ;
+       A UN ENTIER ;
+       L UNE LISTE DE ENTIER ;
       
    DEBUT
        Q := Root ;
@@ -243,9 +391,10 @@
                FSI ;
                SI ( ( FG ( Q ) = NIL ) ET ( FD ( Q ) = NIL ) )
                    TANTQUE ( Q <> NIL )
-                       SI ( STRUCT ( INFO ( Q ) , 2 ) = 0 )
+                       SI ( STRUCT ( INFO ( Q ) , 2 ) = FAUX )
                            ECRIRE ( STRUCT ( INFO ( Q ) , 1 ) ) ;
-                           AFF_STRUCT ( INFO ( Q ) , 2 , 1 ) ;
+                           APPEL Ajouteralafin ( L , STRUCT ( INFO ( Q ) , 1 ) ) ;
+                           AFF_STRUCT ( INFO ( Q ) , 2 , VRAI ) ;
                            Q := PERE ( Q ) ;
                           
                        SINON
@@ -267,99 +416,81 @@
    FIN
   { 
    }
-  /***************************               Generer ARBRE BST ***************************/
-   ACTION Generatetree ( Root , N )
-   SOIT
-       Root UN ARB DE ( ENTIER , ENTIER ) ;
-       N UN ENTIER ;
-       I UN ENTIER ;
-       A UN ENTIER ;
-      
+   /*********************Verify Traversal 1******************************/
+   FONCTION Verifytraversal1 ( Root , L1 ) : BOOLEEN ;
+   SOIENT
+       Root UN ARB DE ( ENTIER , BOOLEEN ) ;
+       L2 UNE LISTE DE ENTIER ;
+       Q UNE FILE DE ENTIER ;
+       P UN ENTIER ;
+       L1 UNE LISTE DE ENTIER ;
+       Egaux UN BOOLEEN ;
+
    DEBUT
-       POUR I := 1 , N , 1
-           A := ALEANOMBRE ( 300 ) ;
-           TANTQUE Search ( Root , A ) :
-               A := ALEANOMBRE ( 300 ) ;
-              
-           FTQ ;
-           APPEL Inserer ( Root , A ) ;
-          
-       FPOUR ;
-      
+       CREERFILE ( Q ) ;
+       Egaux := VRAI ;
+       L2 := NIL ;
+       APPEL Enfilerinordre ( Root , Q ) ;
+       TANTQUE ( NON FILEVIDE ( Q ) )
+           DEFILER ( Q , P ) ;
+           APPEL Ajouteralafin ( L2 , P ) ;
+
+       FTQ ;
+       TANTQUE ( ( L2 <> NIL ) ET Egaux )
+           SI ( VALEUR ( L1 ) <> VALEUR ( L2 ) )
+               Egaux := FAUX ;
+
+           FSI ;
+           L2 := SUIVANT ( L2 ) ;
+           L1 := SUIVANT ( L1 ) ;
+
+       FTQ ;
+       Verifytraversal1 := Egaux ;
+
    FIN
-  { 
-   }
-  /********************      Enqueue Parents of leaves **********************/
-   ACTION Enqueueintraversal2 ( Root , Q ) ;
+
+  /********************  Enqueue leaves **********************/
+   ACTION Enqueueleaves ( Root , Q ) ;
    SOIT
-       Root UN ARB DE ( ENTIER , ENTIER ) ;
-       Q : FILE DE ARB DE ( ENTIER , ENTIER ) ;
+       Root UN ARB DE ( ENTIER , BOOLEEN ) ;
+       Q : FILE DE ARB DE ( ENTIER , BOOLEEN ) ;
       
    DEBUT
        SI Root <> NIL
-           APPEL Enqueueintraversal2 ( FG ( Root ) , Q ) ;
+           APPEL Enqueueleaves ( FG ( Root ) , Q ) ;
            SI ( FD ( Root ) = NIL ) ET ( FG ( Root ) = NIL )
-               AFF_STRUCT ( INFO ( Root ) , 2 , 1 ) ;
-               ECRIRE ( STRUCT ( INFO ( Root ) , 1 ) ) ;
-               SI PERE ( Root ) <> NIL
-                   SI ( FG ( PERE ( Root ) ) = NIL )
-                       SI FD ( PERE ( Root ) ) = NIL
-                           ENFILER ( Q , PERE ( Root ) ) ;
-                          
-                       SINON
-                           SI ( STRUCT ( INFO ( FD ( PERE ( Root ) ) ) , 2 ) = 1 )
-                               ENFILER ( Q , PERE ( Root ) ) ;
-                              
-                           FSI ;
-                          
-                       FSI ;
-                      
-                   SINON
-                       SI STRUCT ( INFO ( FG ( PERE ( Root ) ) ) , 2 ) = 1
-                           SI FD ( PERE ( Root ) ) = NIL
-                               ENFILER ( Q , PERE ( Root ) ) ;
-                              
-                           SINON
-                               SI STRUCT ( INFO ( FD ( PERE ( Root ) ) ) , 2 ) = 1
-                                   ENFILER ( Q , PERE ( Root ) ) ;
-                                  
-                               FSI ;
-                              
-                           FSI ;
-                          
-                       FSI ;
-                      
-                   FSI ;
-                  
-               FSI ;
+               ENFILER ( Q , Root ) ;
               
            FSI ;
-           APPEL Enqueueintraversal2 ( FD ( Root ) , Q ) ;
+           APPEL Enqueueleaves ( FD ( Root ) , Q ) ;
           
        FSI ;
       
    FIN
-  /***********************                Traversal 2  ***********************/
-   ACTION Traversal2 ( Root )
+  /***********************   Traversal 2  ***********************/
+   ACTION Traversal2 ( Root,l )
    SOIT
-       Root UN ARB DE ( ENTIER , ENTIER ) ;
-       Q UNE FILE DE ARB DE ( ENTIER , ENTIER ) ;
-       P UN ARB DE ( ENTIER , ENTIER ) ;
+       Root UN ARB DE ( ENTIER , BOOLEEN ) ;
+       Q UNE FILE DE ARB DE ( ENTIER , BOOLEEN ) ;
+       P UN ARB DE ( ENTIER , BOOLEEN ) ;
+       l une liste de entier ;
       
    DEBUT
        CREERFILE ( Q ) ;
-       APPEL Enqueueintraversal2 ( Root , Q ) ;
+       APPEL Enqueueleaves ( Root , Q ) ;
        TANTQUE NON FILEVIDE ( Q )
+           ;
            DEFILER ( Q , P ) ;
-           AFF_STRUCT ( INFO ( P ) , 2 , 1 ) ;
+           AFF_STRUCT ( INFO ( P ) , 2 , VRAI ) ;
            ECRIRE ( STRUCT ( INFO ( P ) , 1 ) ) ;
+           appel ajouteralafin(l,STRUCT ( INFO ( P ) , 1 ));
            SI PERE ( P ) <> NIL
                SI ( FG ( PERE ( P ) ) = NIL )
                    SI FD ( PERE ( P ) ) = NIL
                        ENFILER ( Q , PERE ( P ) ) ;
                       
                    SINON
-                       SI ( STRUCT ( INFO ( FD ( PERE ( P ) ) ) , 2 ) = 1 )
+                       SI ( STRUCT ( INFO ( FD ( PERE ( P ) ) ) , 2 ) = VRAI )
                            ENFILER ( Q , PERE ( P ) ) ;
                           
                        FSI ;
@@ -367,12 +498,12 @@
                    FSI ;
                   
                SINON
-                   SI STRUCT ( INFO ( FG ( PERE ( P ) ) ) , 2 ) = 1
+                   SI STRUCT ( INFO ( FG ( PERE ( P ) ) ) , 2 ) = VRAI
                        SI FD ( PERE ( P ) ) = NIL
                            ENFILER ( Q , PERE ( P ) ) ;
                           
                        SINON
-                           SI STRUCT ( INFO ( FD ( PERE ( P ) ) ) , 2 ) = 1
+                           SI STRUCT ( INFO ( FD ( PERE ( P ) ) ) , 2 ) = VRAI
                                ENFILER ( Q , PERE ( P ) ) ;
                               
                            FSI ;
@@ -386,5 +517,260 @@
            FSI ;
           
        FTQ ;
+       APPEL Resettree ( Root ) ;
+      
+   FIN
+  /**********************************************************************/
+   ACTION Ajouteralafin ( Head , Val ) ;
+   SOIENT
+       Head UNE LISTE DE ENTIER ;
+       Val UN ENTIER ;
+       P , Q DES LISTE DE ENTIER ;
+       Exist : BOOLEEN ;
+      
+   DEBUT
+       Exist := FAUX ;
+       SI Head = NIL
+           ALLOUER ( Head ) ;
+           AFF_VAL ( Head , Val ) ;
+          
+       SINON
+           P := Head ;
+           TANTQUE ( ( SUIVANT ( P ) <> NIL ) ET ( NON Exist ) )
+               SI ( Val = VALEUR ( P ) )
+                   Exist := VRAI ;
+                  
+               FSI ;
+               P := SUIVANT ( P ) ;
+              
+           FTQ ;
+           SI ( NON Exist )
+               ALLOUER ( Q ) ;
+               AFF_VAL ( Q , Val ) ;
+               AFF_ADR ( P , Q ) ;
+              
+           FINSI ;
+          
+       FINSI ;
+      
+   FIN
+  /**************************************************************/
+   ACTION Enfilerinordre ( Root , Q ) ;
+   SOIENT
+       Q UNE FILE DE ENTIER ;
+       Root UN ARB DE ( ENTIER , BOOLEEN ) ;
+       P UN ARB DE ( ENTIER , BOOLEEN ) ;
+      
+   DEBUT
+       SI ( Root <> NIL )
+           APPEL Enfilerinordre ( FG ( Root ) , Q ) ;
+           SI ( ( FG ( Root ) = NIL ) ET ( FD ( Root ) = NIL ) )
+               P := Root ;
+               TANTQUE P <> NIL
+                   ENFILER ( Q , STRUCT ( INFO ( P ) , 1 ) ) ;
+                   P := PERE ( P ) ;
+                  
+               FTQ ;
+              
+           FSI ;
+           APPEL Enfilerinordre ( FD ( Root ) , Q ) ;
+          
+       FSI ;
+      
+   FIN
+
+  /*********************************************************************/
+   ACTION Traversal4 ( Root )
+   SOIT
+       Root UN ARB DE ( ENTIER , BOOLEEN ) ;
+       Q UNE FILE DE ARB DE ( ENTIER , BOOLEEN ) ;
+       P UN ARB DE ( ENTIER , BOOLEEN ) ;
+      
+   DEBUT
+       CREERFILE ( Q ) ;
+       APPEL Enqueueintraversal4 ( Root , Q ) ;
+       TANTQUE NON FILEVIDE ( Q )
+           DEFILER ( Q , P ) ;
+           AFF_STRUCT ( INFO ( P ) , 2 , VRAI ) ;
+           ECRIRE ( STRUCT ( INFO ( P ) , 1 ) ) ;
+           SI PERE ( P ) <> NIL
+               SI ( FD ( PERE ( P ) ) = NIL )
+                   SI FG ( PERE ( P ) ) = NIL
+                       ENFILER ( Q , PERE ( P ) ) ;
+                      
+                   SINON
+                       SI ( STRUCT ( INFO ( FG ( PERE ( P ) ) ) , 2 ) = VRAI )
+                           ENFILER ( Q , PERE ( P ) ) ;
+                          
+                       FSI ;
+                      
+                   FSI ;
+                  
+               SINON
+                   SI STRUCT ( INFO ( FD ( PERE ( P ) ) ) , 2 ) = VRAI
+                       SI FG ( PERE ( P ) ) = NIL
+                           ENFILER ( Q , PERE ( P ) ) ;
+                          
+                       SINON
+                           SI STRUCT ( INFO ( FG ( PERE ( P ) ) ) , 2 ) = VRAI
+                               ENFILER ( Q , PERE ( P ) ) ;
+                              
+                           FSI ;
+                          
+                       FSI ;
+                      
+                   FSI ;
+                  
+               FSI ;
+              
+           FSI ;
+          
+       FTQ ;
+      
+   FIN
+  /********************   Enqueue Parents of leaves **********************/
+   ACTION Enqueueintraversal4 ( Root , Q ) ;
+   SOIT
+       Root UN ARB DE ( ENTIER , BOOLEEN ) ;
+       Q : FILE DE ARB DE ( ENTIER , BOOLEEN ) ;
+      
+   DEBUT
+       SI Root <> NIL
+           APPEL Enqueueintraversal4 ( FD ( Root ) , Q ) ;
+           SI ( FD ( Root ) = NIL ) ET ( FG ( Root ) = NIL )
+               AFF_STRUCT ( INFO ( Root ) , 2 , VRAI ) ;
+               ECRIRE ( STRUCT ( INFO ( Root ) , 1 ) ) ;
+               SI PERE ( Root ) <> NIL
+                   SI ( FG ( PERE ( Root ) ) = NIL )
+                       SI FD ( PERE ( Root ) ) = NIL
+                           ENFILER ( Q , PERE ( Root ) ) ;
+                          
+                       SINON
+                           SI ( STRUCT ( INFO ( FD ( PERE ( Root ) ) ) , 2 ) = VRAI )
+                               ENFILER ( Q , PERE ( Root ) ) ;
+                              
+                           FSI ;
+                          
+                       FSI ;
+                      
+                   SINON
+                       SI STRUCT ( INFO ( FG ( PERE ( Root ) ) ) , 2 ) = VRAI
+                           SI FD ( PERE ( Root ) ) = NIL
+                               ENFILER ( Q , PERE ( Root ) ) ;
+                              
+                           SINON
+                               SI STRUCT ( INFO ( FD ( PERE ( Root ) ) ) , 2 ) = VRAI
+                                   ENFILER ( Q , PERE ( Root ) ) ;
+                                  
+                               FSI ;
+                              
+                           FSI ;
+                          
+                       FSI ;
+                      
+                   FSI ;
+                  
+               FSI ;
+              
+           FSI ;
+           APPEL Enqueueintraversal4 ( FG ( Root ) , Q ) ;
+          
+       FSI ;
+      
+   FIN
+
+  /********************************************************************/
+   FONCTION Verifytraversal2 ( Root , List ) : BOOLEEN
+   SOIENT
+       Root UN ARB DE ( ENTIER , BOOLEEN ) ;
+       Temp UNE FILE DE ARB DE ( ENTIER , BOOLEEN ) ;
+       L UNE FILE DE ENTIER ;
+       Egaux UN BOOLEEN ;
+       A UN ENTIER ;
+       List UNE LISTE DE ENTIER ;
+       P UN ARB DE ( ENTIER , BOOLEEN ) ;
+      
+   DEBUT
+       CREERFILE ( L ) ;
+       CREERFILE ( Temp ) ;
+       egaux:=vrai;
+       TANTQUE ( STRUCT ( INFO ( Root ) , 2 ) ) = FAUX
+           APPEL Enfilerverify2 ( Root , Temp ) ;
+          /* Enfile les noeuds consideres comme feuille */
+           TANTQUE NON FILEVIDE ( Temp )
+               DEFILER ( Temp , P ) ;
+               AFF_STRUCT ( INFO ( P ) , 2 , VRAI ) ;
+              /* Les mets a visited*/
+               ENFILER ( L , STRUCT ( INFO ( P ) , 1 ) ) ;
+              
+           FTQ ;
+          
+       FTQ ;
+       appel resettree(Root);
+
+       TANTQUE NON FILEVIDE ( L )
+           DEFILER ( L , A ) ;
+
+           si valeur(list)<>A
+              egaux:=faux;
+           fsi;
+           list:=suivant(list);
+       FTQ ;
+       Verifytraversal2 := egaux ;
+      
+   FIN
+
+  /*************************************/
+   ACTION Enfilerverify2 ( Root , L )
+   SOIENT
+       Root UN ARB DE ( ENTIER , BOOLEEN ) ;
+       L UNE FILE DE ARB DE ( ENTIER , BOOLEEN ) ;
+      
+   DEBUT
+       SI Root <> NIL
+           APPEL Enfilerverify2 ( FG ( Root ) , L ) ;
+           SI ( FG ( Root ) = NIL )
+               SI FD ( Root ) = NIL
+                   SI STRUCT ( INFO ( Root ) , 2 ) = FAUX
+                       ENFILER ( L , Root ) ;
+                      
+                   FSI ;
+                  
+               SINON
+                   SI ( STRUCT ( INFO ( FD ( Root ) ) , 2 ) = VRAI )
+                       SI STRUCT ( INFO ( Root ) , 2 ) = FAUX
+                           ENFILER ( L , Root ) ;
+                          
+                       FSI ;
+                      
+                   FSI ;
+                  
+               FSI ;
+              
+           SINON
+               SI STRUCT ( INFO ( FG ( Root ) ) , 2 ) = VRAI
+                   SI FD ( Root ) = NIL
+                       SI STRUCT ( INFO ( Root ) , 2 ) = FAUX
+                           ENFILER ( L , Root ) ;
+                          
+                       FSI ;
+                      
+                   SINON
+                       SI STRUCT ( INFO ( FD ( Root ) ) , 2 ) = VRAI
+                           SI STRUCT ( INFO ( Root ) , 2 ) = FAUX
+                               ENFILER ( L , Root ) ;
+                              
+                           FSI ;
+                          
+                       FSI ;
+                      
+                   FSI ;
+                  
+               FSI ;
+              
+           FSI ;
+           APPEL Enfilerverify2 ( FD ( Root ) , L ) ;
+          
+       FSI ;
       
    FIN
