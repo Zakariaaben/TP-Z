@@ -4,7 +4,7 @@
   /**             E S I - Alger                              **/
   /**             Copywrite 2014                             **/
   /**--------------------------------------------------------**/
-
+#define NOMINMAX // Define this before including windows.h
   #include <stdio.h>
   #include <stdlib.h>
   #include <Time.h>
@@ -12,6 +12,7 @@
   #include <conio.h>
 
   typedef int bool ;
+  
 
   #define True 1
   #define False 0
@@ -648,7 +649,7 @@
     }
   /* 
    */
-  /***************************GGGGenerer ARBRE BST ***************************/
+  /***************************GGGGÉNÉRER ARBRE BST ***************************/
   void Generatetree (Pointeur_ATib *Root , int *N)
     {
       /** Variables locales **/
@@ -1363,8 +1364,85 @@ void creategraph(Pointeur_ATib root, const char* filename) {
 
 }
 
+
+
+// Secondary function to draw the tree horizontally
+void draw_tree_hor2(Pointeur_ATib tree, int depth, char* path, int right) {
+    if (tree == NULL)
+        return;
+
+    depth++;
+
+    // Start with the right node
+    draw_tree_hor2(tree->Fd, depth, path, 1);
+
+    if (depth > 1) {
+        path[depth - 2] = 0;
+        if (right)
+            path[depth - 2] = 1;
+    }
+
+    if (tree->Fg)
+        path[depth - 1] = 1;
+    else
+        path[depth - 1] = 0;
+
+    printf("\n");
+
+    for (int i = 0; i < depth - 1; i++) {
+        if (i == depth - 2)
+            printf("+");
+        else if (path[i])
+            printf("|");
+        else
+            printf(" ");
+
+        for (int j = 1; j < 5; j++)
+            if (i < depth - 2)
+                printf(" ");
+            else
+                printf("-");
+    }
+
+    printf("%d\n", tree->Val->Champ1);
+
+    for (int i = 0; i < depth; i++) {
+        if (path[i])
+            printf("|");
+        else
+            printf(" ");
+
+        for (int j = 1; j < 5; j++)
+            printf(" ");
+    }
+
+    draw_tree_hor2(tree->Fg, depth, path, 0);
+}
+
+// Primary function to draw the tree horizontally
+void draw_tree_hor(Pointeur_ATib tree) {
+    char path[255] = {0};
+    draw_tree_hor2(tree, 0, path, 0);
+}
+
+
+
+
+
+void etiquette(){
+    printf (  "                    |**********************************************************************************|\n" ) ;
+    printf (  "                    |***********************   TP Z  BST Traversals 2023/2034   ***********************|\n" ) ;
+    printf (  "                    |******************      By Benyahia Alia & Benhamiche Zakaria       **************|\n" ) ;
+    printf (  "                    |__________________________________________________________________________________|\n\n" ) ;
+}
+
+
+
   int main(int argc, char *argv[])
     {
+      
+    SetConsoleCP(CP_UTF8); // Input codepage (affects cin, scanf, etc.)
+    SetConsoleOutputCP(CP_UTF8);
      srand(time(NULL));
      Tableaudebst = malloc(10 * sizeof(Pointeur_ATib));
      int _Izw2;for (_Izw2=0; _Izw2<10; ++_Izw2)
@@ -1372,29 +1450,30 @@ void creategraph(Pointeur_ATib root, const char* filename) {
      
      Generes  =  False ;
      Choix  =  5 ;
-     while( ( Choix != 3 )) {
-       printf (  "                    |**********************************************************************************|\n" ) ;
-     printf (  "                    |***********************   TP Z  BST Traversals 2023/2034   ***********************|\n" ) ;
-     printf (  "                    |******************      By Benyahia Alia & Benhamiche Zakaria       **************|\n" ) ;
-     printf (  "                    |__________________________________________________________________________________|\n\n" ) ;
+     while( ( Choix != 4 )) {
        
-       printf ("Veuillez entrer un choix (1-3)\n" ) ;
+       etiquette();
+       printf ("Veuillez entrer un choix (1-4)\n\n" ) ;
        
-       printf (  "\t1 - Generer Arbres Binaires \n" ) ;
+       printf (  "\t1 - Génerer Arbres Binaires \n\n" ) ;
        
-       printf ( "\t2 - Appliquer Traversals\n" ) ;
+       printf ( "\t2 - Appliquer Traversals\n\n" ) ;
+
+       printf ( "\t3 - Afficher Arbre \'i\' dans la console\n\n" ) ;
        
-       printf ( "\t3 - Exit\n" ) ;
-       printf("\t(Vous pouver visualiser les arbres crees sur \x1b[32m https://vizualisation-tpz.vercel.app/ \x1b[0m ( CTRL + CLICK ) ) \n ");
+       printf ( "\t4 - Exit\n" ) ;
+       printf("\n\t(Vous pouver visualiser les arbres crées sur \x1b[32m https://vizualisation-tpz.vercel.app/ \x1b[0m ( CTRL + CLICK ) ) \n ");
 
        printf("\n\tVotre Reponse: ");
        scanf ( " %d", &Choix ) ;
-       while( ( ( Choix > 3 ) || ( Choix < 1 ) )) {
-         printf ( " %s", "Veuillez Entrer un choix Valide (de 1 a 3) : " ) ;
+       while( ( ( Choix > 4 ) || ( Choix < 1 ) )) {
+         printf ( " %s", "Veuillez Entrer un choix Valide (de 1 a 4) : " ) ;
          scanf ( " %d", &Choix ) ;
         
        } ;
        if( ( Choix == 1 )) {
+        system("cls");
+        etiquette();
          Generes  =  True ;
          for( Jetable  =  1 ;Jetable <=  10   ; ++Jetable){
            Monarbre  =  NULL ;
@@ -1404,26 +1483,28 @@ void creategraph(Pointeur_ATib root, const char* filename) {
            _Px2 =  Element_V10ATib ( Tableaudebst , Jetable   ) ;
            if( ( Verifytreeinorder ( &_Px2) )) {
              printf("\n\t\t         _ \n");
-             printf("\t\tL'arbre |%d| a ete cree sans Erreurs !!\n",Jetable);
+             printf("\t\tL'arbre |%d| a été crée sans Erreurs !!\n",Jetable);
+             printf("\t\t         - \n");
              creategraph(Tableaudebst[Jetable-1],"Tree.txt");
              }
            else
              {
-             printf ( "    \n!!!!!!! Erreur dans la creation de l''arbre %d !!!!!!!!!\n",Jetable ) ;
+             printf ( "    \n!!!!!!! Erreur dans la création de l''arbre %d !!!!!!!!!\n",Jetable ) ;
 
             
            } ;
            
           
          } ;
+         printf("\t\nVisualiser Sur \x1b[32m https://vizualisation-tpz.vercel.app/ \x1b[0m ( CTRL + CLICK ) \n ");
          
         
        } ;
        if( Choix == 2) {
          if( Generes == False) {
-           ;
            
-           printf (  "\n!!!!!!!!!!!! ERREUR : VEUILLEZ D''ABORDS GENERER LES ARBRES !!!!!!!!\n" ) ;
+           
+           printf (  "\n!!!!!!!!!!!! ERREUR : VEUILLEZ D''ABORDS GÉNÉRER LES ARBRES !!!!!!!!\n" ) ;
            
            }
          else
@@ -1434,7 +1515,7 @@ void creategraph(Pointeur_ATib root, const char* filename) {
            scanf ( " %d", &Choixarbre ) ;
            while( ( ( Choixarbre > 10 ) || ( Choixarbre < 1 ) )) {
              
-             printf (  "          \n  !!!!!!  Veuillez Etrer un arbre entre 1 et 10 !!!!!!!\n" ) ;
+             printf (  "          \n  !!!!!!  Veuillez Entrer un arbre entre 1 et 10 !!!!!!!\n" ) ;
              printf("\n\tVotre Reponse: ");
              scanf ( " %d", &Choixarbre ) ;
             
@@ -1459,7 +1540,7 @@ void creategraph(Pointeur_ATib root, const char* filename) {
            _Px4 =  Element_V10ATib ( Tableaudebst , Choixarbre   ) ;
            if( Verifytraversal1 ( &_Px4, & Listofelements )) {
              printf("\t\t---------------------------------------------------------------\n");
-             printf (  "\t\t|-  L'Arbre a ete parcouru avec Traversal1 avec succees !!!!! |\n" ) ;
+             printf (  "\t\t|-  L'Arbre a été parcouru avec Traversal1 avec succees !!!!! |\n" ) ;
              printf("\t\t---------------------------------------------------------------\n\n\n\n\n\n");
              }
            else
@@ -1482,7 +1563,7 @@ void creategraph(Pointeur_ATib root, const char* filename) {
            _Px6 =  Element_V10ATib ( Tableaudebst , Choixarbre   ) ;
            if( Verifytraversal2 ( &_Px6, & Listofelements )) {
              printf("\t\t---------------------------------------------------------------\n");
-             printf (  "\t\t|-  L'Arbre a ete parcouru avec Traversal2 avec succees !!!!! |\n" ) ;
+             printf (  "\t\t|-  L'Arbre a été parcouru avec Traversal2 avec succees !!!!! |\n" ) ;
              printf("\t\t---------------------------------------------------------------\n\n\n\n\n\n");
              }
            else
@@ -1502,7 +1583,7 @@ void creategraph(Pointeur_ATib root, const char* filename) {
            _Px8 =  Element_V10ATib ( Tableaudebst , Choixarbre   ) ;
            if( Verifytraversal3 ( &_Px8, & Listofelements )) {
              printf("\t\t---------------------------------------------------------------\n");
-             printf (  "\t\t|-  L'Arbre a ete parcouru avec Traversal3 avec succees !!!!! |\n" ) ;
+             printf (  "\t\t|-  L'Arbre a été parcouru avec Traversal3 avec succees !!!!! |\n" ) ;
              printf("\t\t---------------------------------------------------------------\n\n\n\n\n\n");
              }
            else
@@ -1520,30 +1601,49 @@ void creategraph(Pointeur_ATib root, const char* filename) {
            _Px10 =  Element_V10ATib ( Tableaudebst , Choixarbre   ) ;
            if( Verifytraversal4 ( &_Px10, & Listofelements )) {
              printf("\t\t---------------------------------------------------------------\n");
-             printf (  "\t\t|-  L'Arbre a ete parcouru avec Traversal4 avec succees !!!!! |\n" ) ;
+             printf (  "\t\t|-  L'Arbre a été parcouru avec Traversal4 avec succees !!!!! |\n" ) ;
              printf("\t\t---------------------------------------------------------------\n\n\n\n\n\n");
              }
            else
              {
              
-             printf (  "     \n !!!!!!Erreur dans le traversal3 !!!!!!\n" ) ;
+             printf (  "     \n !!!!!!Erreur dans le traversal4 !!!!!!\n" ) ;
             
             
            } ;
-           printf("\tVisualiser Sur \x1b[32m https://vizualisation-tpz.vercel.app/ \x1b[0m ( CTRL + CLICK ) \n ");
+
+           
+           
+           
+           printf("\n\tVisualiser Sur \x1b[32m https://vizualisation-tpz.vercel.app/ \x1b[0m ( CTRL + CLICK ) \n ");
           
          } ;
+         
+         
         
        } ;
+       if (Choix == 3) 
+         {
+         if (Generes) {system("cls");
+          etiquette();
+          printf("\n\t - Quel arbre voulez-vous afficher dans la console ? Votre reponse :  ");
+          scanf ( " %d", &Choixarbre ) ;
+          
+          draw_tree_hor(Element_V10ATib ( Tableaudebst , Choixarbre   ));
+          printf("\n\tConseil: Pour plus de visibilité il est conséillé de visitér le site \x1b[32m https://vizualisation-tpz.vercel.app/ \x1b[0m ( CTRL + CLICK )\n");
+          }else{
+              printf (  "\n!!!!!!!!!!!! ERREUR : VEUILLEZ D''ABORDS GÉNÉRER LES ARBRES !!!!!!!!\n" ) ;
+          }
+         }
        printf("\n\n");
+     
       system("PAUSE");
-      
       system("cls");
       
      } ;
      
     
    
-      system("PAUSE");
+      
       return 0;
     }
